@@ -486,32 +486,9 @@ echo "ПРАЙС-ЛИСТ НА АУДИОСИСТЕМЫ";
 				</td>
 				<td>
 				<?php
-				if ($price>=1000){
-					$int=intval($price/1000);
-					$ostatok = $price % 1000;
-					$int2=intval($price/100);
-					$ostatok2 = $int2 % 10;
-					$int3=intval($price/10);
-					$ostatok3 = $int3 % 10;
-					$ostatok4 = $price % 10;
-					if ($ostatok2==0) {
-						if ($ostatok3==0) {
-							if ($ostatok4==0) {
-								echo htmlspecialchars("$int $ostatok2$ostatok3$ostatok4 ");
-							}
-							else {
-								echo htmlspecialchars("$int $ostatok2$ostatok3$ostatok ");
-							}
-						}
-						else {
-							echo htmlspecialchars("$int $ostatok2$ostatok ");
-						}
-					}
-					else {
-						echo htmlspecialchars("$int $ostatok ");
-					}
-					echo htmlspecialchars ($item['prices']['curName']);
-				}
+				$formatedprice = number_format($price, 0, ',', ' ');
+				echo htmlspecialchars("$formatedprice ");
+				echo htmlspecialchars ($item['prices']['curName']);
 				?>
 				</td>
 				<td>
@@ -519,8 +496,8 @@ echo "ПРАЙС-ЛИСТ НА АУДИОСИСТЕМЫ";
 				$photo=$item['mainPhoto']['url'];
 				$pwidth=$item['mainPhoto']['width']/6;
 				$pheight=$item['mainPhoto']['height']/6;
-				echo "<center><img src='$photo' width=$pwidth height=$pheight ></center>";
 				?>
+				<center><img <?php echo htmlspecialchars ("src='$photo' width=$pwidth height=$pheight") ?> ></center>
 				</td>
 			</tr>
 			<?php
