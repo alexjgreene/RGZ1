@@ -69,7 +69,7 @@
     'vendor' => 'Sven',
     'isGroup' => false,
     'reviewsCount' => 12,
-    'rating' => 1.0,
+    'rating' => -1.0,
     'offersCount' => 39,
     'gradeCount' => 0,
     'articlesCount' => 2,
@@ -382,125 +382,130 @@ echo "ПРАЙС-ЛИСТ НА АУДИОСИСТЕМЫ";
 </b>
 </p>
 <table border align="center" cellspacing="0" cellpadding="5" cols="6" >
-<tr>
-<td>
-<?php
-echo "Название";
-?>
-</td>
-<td>
-<?php
-echo "Описание";
-?>
-</td>
-<td>
-<?php
-echo "Продавец";
-?>
-</td>
-<td>
-<?php
-echo "Рейтинг";
-?>
-</td>
-<td>
-<?php
-echo "Цена";
-?>
-</td>
-<td>
-<?php
-echo "Фотография";
-?>
-</td>
-</tr>
-<?php
-$newrating=[];
-foreach($data as $item){
-	$newrating[]=$item['rating'];
-}
-$max=0;
-foreach($newrating as $one){
-	if($one>$max){
-		$max=$one;
-	}
-}
-$min=5;
-foreach($newrating as $one){
-	if($one<$min){
-		$min=$one;
-	}
-}
-$newprices=[];
-foreach($data as $index => $item){
-	$newprices[$index]=$item['prices']['amount'];
-}
-arsort($newprices);
-
-foreach($newprices as $index => $price){
-foreach($data as $indexx => $item){
-	if($index==$indexx){
-	?>
 	<tr>
-	<td>
-	<span class="<?php
-	if($item['rating']>=$max){
-		echo 'max-rating';
-	}
-	?>">
-	<span class="<?php
-	if($item['rating']<=$min){
-		echo 'min-rating';
-	}
-	?>">
-	<?php
-	echo $item['name'];
-	?>
-	</td>
-	<td>
-	<?php
-	echo $item['description'];
-	?>
-	</td>
-	<td>
-	<?php
-	echo $item['vendor'];
-	?>
-	</td>
-	<td>
-	<span class="<?php
-	if($item['rating']>=$max){
-		echo 'max-rating';
-	}
-	?>">
-	<span class="<?php
-	if($item['rating']<=$min){
-		echo 'min-rating';
-	}
-	?>">
-	<?php
-	echo $item['rating'];
-	?>
-	</td>
-	<td>
-	<?php
-	echo $price;
-	echo " ";
-	echo $item['prices']['curName'];
-	?>
-	</td>
-	<td>
-	<?php
-	$photo=$item['mainPhoto']['url'];
-	$pwidth=$item['mainPhoto']['width']/6;
-	$pheight=$item['mainPhoto']['height']/6;
-	echo "<img src='$photo' width=$pwidth height=$pheight>";
-	?>
-	</td>
+		<td>
+		<?php
+		echo "Название";
+		?>
+		</td>
+		<td>
+		<?php
+		echo "Описание";
+		?>
+		</td>
+		<td>
+		<?php
+		echo "Продавец";
+		?>
+		</td>
+		<td>
+		<?php
+		echo "Рейтинг";
+		?>
+		</td>
+		<td>
+		<?php
+		echo "Цена";
+		?>
+		</td>
+		<td>
+		<?php
+		echo "Фотография";
+		?>
+		</td>
 	</tr>
 	<?php
+	$newrating=[];
+	foreach($data as $item){
+		$newrating[]=$item['rating'];
 	}
-}
-}
-?>
+	$max=0;
+	foreach($newrating as $one){
+		if($one>$max){
+			$max=$one;
+		}
+	}
+	$min=5;
+	foreach($newrating as $one){
+		if($one>=0){
+			if($one<$min){
+			$min=$one;
+			}
+		}
+	}
+	$newprices=[];
+	foreach($data as $index => $item){
+		$newprices[$index]=$item['prices']['amount'];
+	}
+	arsort($newprices);
+
+	foreach($newprices as $index => $price){
+		foreach($data as $indexx => $item){
+			if($index==$indexx){
+			?>
+			<tr>
+				<td>
+				<span class="<?php
+				if($item['rating']==$max){
+					echo 'max-rating';
+				}
+				?>">
+				<span class="<?php
+				if($item['rating']==$min){
+					echo 'min-rating';
+				}
+				?>">
+				<?php
+				echo htmlspecialchars ($item['name']);
+				?>
+				</td>
+				<td>
+				<?php
+				echo htmlspecialchars($item['description']);
+				?>
+				</td>
+				<td>
+				<?php
+				echo htmlspecialchars ($item['vendor']);
+				?>
+				</td>
+				<td>
+				<span class="<?php
+				if($item['rating']==$max){
+					echo 'max-rating';
+				}
+				?>">
+				<span class="<?php
+				if($item['rating']==$min){
+					echo 'min-rating';
+				}
+				?>">
+				<?php
+				echo htmlspecialchars ($item['rating']);
+				?>
+				</td>
+				<td>
+				<?php
+				if ($price>=1000){
+					$int=intval($price/1000);
+					$ostatok = $price % 1000;
+					echo htmlspecialchars("$int $ostatok ");
+					echo htmlspecialchars ($item['prices']['curName']);
+				}
+				?>
+				</td>
+				<td>
+				<?php
+				$photo=$item['mainPhoto']['url'];
+				$pwidth=$item['mainPhoto']['width']/6;
+				$pheight=$item['mainPhoto']['height']/6;
+				echo "<center><img src='$photo' width=$pwidth height=$pheight ></center>";
+				?>
+				</td>
+			</tr>
+			<?php
+			}
+		}
+	}
+	?>
 </table>
