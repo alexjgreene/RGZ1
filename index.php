@@ -496,7 +496,7 @@ echo "ПРАЙС-ЛИСТ НА АУДИОСИСТЕМЫ";
 				$photo=$item['mainPhoto']['url'];
 				$pwidth=$item['mainPhoto']['width']/6;
 				$pheight=$item['mainPhoto']['height']/6;
-				echo "<img src='".htmlspecialchars($photo)."'>";
+				echo '<center><img src="'.htmlspecialchars($photo).'" width='.htmlspecialchars($pwidth).' height='.htmlspecialchars($pheight).'></center>';
 				?>
 				</td>
 			</tr>
